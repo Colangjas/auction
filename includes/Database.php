@@ -30,10 +30,10 @@ class Database
      * Description: Given a SQL statement and optionally an array of binding
      * values, use PDO to prepare and bind the values and execute.
      */
-    public function sqlBindQuery($sql, $valArray = null)
+    public function sqlBindQuery($query, $valArray = null)
     {
         try {
-            $statement = $this->connection->prepare($sql);
+            $statement = $this->connection->prepare($query);
             if (is_array($valArray)) {
                 $statement->execute($valArray);
             } else {
@@ -55,8 +55,8 @@ class Database
      * method. Return an associative array of all rows affected/returned from
      * the SQL query.
      */
-    public function fetchArray($sql, $valArray = null) {
-        $statement = $this->sqlBindQuery($sql, $valArray);
+    public function fetchArray($query, $valArray = null) {
+        $statement = $this->sqlBindQuery($query, $valArray);
         if ($statement->rowCount() == 0) {
             return false;
         } else if ($statement->rowCount() >= 1) {
@@ -83,8 +83,8 @@ class Database
      * Description: Given a SQL statement binding values, execute the
      * statement and return the number of rows returned from the SQL query.
      */
-    public function rowCount($sql, $valArray = null) {
-        $statement = $this->sqlBindQuery($sql, $valArray);
+    public function rowCount($query, $valArray = null) {
+        $statement = $this->sqlBindQuery($query, $valArray);
         return $statement->rowCount();
     }
 
